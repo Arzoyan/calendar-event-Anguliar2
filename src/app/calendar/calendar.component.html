@@ -1,0 +1,102 @@
+<!-- Add New Event Button -->
+<div *ngIf="showForm" class="event-form">
+  <h2>Add New Event</h2>
+  <mat-form-field appearance="fill">
+    <mat-label>Title</mat-label>
+    <input matInput [(ngModel)]="newEvent.title" name="title" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Select Date</mat-label>
+    <input
+      matInput
+      [matDatepicker]="picker"
+      [(ngModel)]="newEvent.date"
+      name="date"
+      required
+    />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Description</mat-label>
+    <textarea
+      matInput
+      [(ngModel)]="newEvent.description"
+      name="description"
+      required
+    ></textarea>
+  </mat-form-field>
+
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="saveEvent()"
+    class="save-form"
+  >
+    Save
+  </button>
+</div>
+<div class="calendar-controls">
+  <button (click)="changeMonth(-1)" class="button">Previous</button>
+  <div>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="showForm = !showForm"
+      class="button margin-right-15"
+    >
+      Add Event
+    </button>
+    <mat-form-field appearance="fill">
+      <mat-label>Select a month</mat-label>
+      <mat-select
+        [(value)]="selectedMonth.value"
+        (selectionChange)="changeMonth($event.value)"
+      >
+        <mat-option *ngFor="let month of months" [value]="month.value">
+          {{ month.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <button (click)="changeMonth(1)" class="button">Next</button>
+</div>
+
+<div class="calendar-grid">
+  <div *ngFor="let day of days" [class.has-events]="hasEvents(day)">
+    <div
+      class="calendar-day"
+      [class.today]="isToday(day)"
+      (click)="getFilteredEvents(day)"
+    >
+      {{ day.getDate() }}
+      <div *ngIf="hasEvents(day)" class="event-indicator"></div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="listViewEvents.length > 0; else noEvents" class="event-list">
+  <div>
+    <h3>Events List</h3>
+    <ul>
+      <li
+        *ngFor="let event of listViewEvents; let i = index"
+        class="event-item"
+      >
+        <strong>{{ event.title }}</strong
+        ><br />
+        <span>{{ event.date | date : "MMMM d, y" }}</span
+        ><br />
+        <p>{{ event.description }}</p>
+        <button (click)="handleDelete(i)" class="delete-button">Delete</button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Template to show if there are no events -->
+<ng-template #noEvents>
+  <p>No events available for the selected day.</p>
+</ng-template>

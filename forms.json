@@ -1,0 +1,28 @@
+{
+    "forms": [
+      {
+        "name": "EventForm",
+        "fields": [
+          {
+            "name": "eventTitle",
+            "type": "text",
+            "label": "Event Title",
+            "required": true
+          },
+          {
+            "name": "eventDescription",
+            "type": "textarea",
+            "label": "Description",
+            "required": false
+          },
+          {
+            "name": "selectedDate",
+            "type": "datepicker",
+            "label": "Select a date",
+            "required": true
+          }
+        ]
+      }
+    ]
+  }
+  

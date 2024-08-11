@@ -1,0 +1,11 @@
+{
+    "components": [
+      {
+        "name": "CalendarComponent",
+        "selector": "app-calendar",
+        "path": "src/app/calendar/calendar.component.ts",
+        "description": "Main calendar component"
+      }
+    ]
+  }
+  
